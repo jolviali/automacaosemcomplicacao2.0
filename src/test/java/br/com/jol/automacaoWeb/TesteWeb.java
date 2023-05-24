@@ -1,6 +1,7 @@
 package br.com.jol.automacaoWeb;
 
 import br.com.jol.core.Driver;
+import br.com.jol.enums.Browser;
 import br.com.jol.pages.CursoPage;
 import br.com.jol.pages.PrincipalPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -22,7 +23,7 @@ public class TesteWeb {
     CursoPage cursoPage;
     @Before
     public void inicializaTeste(){
-        driverWeb = new Driver("edge");
+        driverWeb = new Driver(Browser.CHROME);
         driver = driverWeb.getDriver();
         driver.get("https://www.chronosacademy.com.br");
         principalPage = new PrincipalPage(driver);

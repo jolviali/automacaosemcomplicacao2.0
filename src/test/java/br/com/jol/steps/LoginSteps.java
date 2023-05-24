@@ -1,7 +1,9 @@
 package br.com.jol.steps;
 
 import br.com.jol.core.Driver;
+import br.com.jol.enums.Browser;
 import br.com.jol.pages.LoginPage;
+import br.com.jol.pages.NewAccountPage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
@@ -16,7 +18,7 @@ public class LoginSteps {
     LoginPage loginPage;
     @Before
     public void iniciaNavegador(){
-        new Driver("chrome");
+        new Driver(Browser.CHROME);
     }
 
     @After
@@ -29,6 +31,8 @@ public class LoginSteps {
         loginPage = new LoginPage();
         Driver.getDriver().get("https://advantageonlineshopping.com/");
         loginPage.clickBtnLogin();
+        loginPage.visibilityOfBtnFechar();
+        loginPage.aguardaLoader();
     }
     @Quando("for clicado fora da modal")
     public void forClicadoForaDaModal() {
@@ -37,26 +41,27 @@ public class LoginSteps {
     @Entao("a janela modal deve fechar")
     public void aJanelaModalDeveFechar() throws Exception {
         try {
-            loginPage.invisibilityOfBtnFechar();
+            loginPage.visibilityOfBtnFechar();
         }catch (Exception e){
             throw new Exception("A janela modal não foi fechada");
         }
     }
 
 
-    @Quando("clicado no {string} \\(icone de Fechar)")
+    @Quando("clicado no icone de Fechar")
     public void clicadoNoXIconeDeFechar() {
         loginPage.clickBtnFechar();
     }
 
-    @Quando("clicado no link {string}")
+    @Quando("clicado no link Create new account")
     public void clicadoNoLinkCreateNewAccount() {
         loginPage.clickLinkCreateAccount();
     }
 
-    @Entao("a pagina {string} deve ser exibida")
+    @Entao("a pagina Create new account deve ser exibida")
     public void aPaginaCreateNewAccountDeveSerExibida() {
-        
+        NewAccountPage newAccountPage = new NewAccountPage();
+        Assert.assertEquals("CREATE ACCOUNT", newAccountPage.getTxtNewAccount());
     }
 
     @Quando("os campos de login sejam preenchidos da seguinte forma:")
@@ -70,7 +75,7 @@ public class LoginSteps {
         if(remember) loginPage.clickRemember();
     }
 
-    @E("seja clicado o botao {string}")
+    @E("seja clicado o botao Sign in")
     public void sejaClicadoOBotaoSignIn() {
         loginPage.clickBtnSignIn();
     }

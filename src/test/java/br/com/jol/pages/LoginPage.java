@@ -22,10 +22,14 @@ public class LoginPage {
         loginMap.divFechaModal.click();
     }
     public void setInpUserName(String userName){
-        loginMap.inpUserName.sendKeys(userName);
+        if (userName != null){
+            loginMap.inpUserName.sendKeys(userName);
+        }
     }
     public void setInpPassword(String password){
-        loginMap.inpPassword.sendKeys((password));
+        if (password != null){
+            loginMap.inpPassword.sendKeys((password));
+        }
     }
     public void clickRemember(){
         loginMap.inpRemember.click();
@@ -46,5 +50,9 @@ public class LoginPage {
 
     public void invisibilityOfBtnFechar(){
         Driver.invisibilityOf(loginMap.btnFechar);
+    }
+
+    public void aguardaLoader(){
+        Driver.attributeChange(loginMap.divLoader, "display", "none");
     }
 }
