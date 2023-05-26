@@ -2,7 +2,10 @@ package br.com.jol.pages;
 
 import br.com.jol.core.Driver;
 import br.com.jol.maps.LoginMap;
+import br.com.jol.steps.LoginSteps;
 import org.openqa.selenium.support.PageFactory;
+
+import java.time.Duration;
 
 public class LoginPage {
     LoginMap loginMap;
@@ -30,6 +33,7 @@ public class LoginPage {
         if (password != null){
             loginMap.inpPassword.sendKeys((password));
         }
+
     }
     public void clickRemember(){
         loginMap.inpRemember.click();
@@ -38,6 +42,7 @@ public class LoginPage {
         loginMap.linkCreateAccount.click();
     }
     public void clickBtnSignIn(){
+        //Driver.visibilityOf(loginMap.btnSignIn);
         loginMap.btnSignIn.click();
     }
     public boolean isBtnSignIn(){
@@ -54,5 +59,14 @@ public class LoginPage {
 
     public void aguardaLoader(){
         Driver.attributeChange(loginMap.divLoader, "display", "none");
+    }
+
+    public String getUsuarioLogado(){
+        Driver.visibilityOf(loginMap.txtLogado);
+        return loginMap.txtLogado.getText();
+    }
+    public String getErroLogin(){
+        Driver.visibilityOf(loginMap.txtErroLogin);
+        return loginMap.txtErroLogin.getText();
     }
 }

@@ -4,6 +4,7 @@ Funcionalidade: Login
 
   Contexto:
     Dado que a modal esteja sendo exibida
+
   @fecharModal
   Cenário: Fechar a modal ao clicar fora da mesma
     Quando for clicado fora da modal
@@ -19,7 +20,7 @@ Funcionalidade: Login
     Quando clicado no link Create new account
     Entao a pagina Create new account deve ser exibida
 
-  @realizarLogin
+  @LoginComSucesso
   Esquema do Cenario: Realizar login com <identificacao>
     Quando os campos de login sejam preenchidos da seguinte forma:
       | login    | <login>    |
@@ -29,11 +30,11 @@ Funcionalidade: Login
     Entao deve ser possivel logar no sistema
 
     Exemplos:
-      | identificacao       | login   | password | remember |
-      | campos obrigatorios | chronos | senha    | false    |
-      | todos os campos     | chronos | senha    | true     |
+      | identificacao       | login    | password | remember |
+      | campos obrigatorios | jolviali | Senha123 | false    |
+      | todos os campos     | jolviali | Senha123 | true     |
 
-
+  @LoginInvalido
   Esquema do Cenario: Login com <identificacao>
     Quando os campos de login sejam preenchidos da seguinte forma:
       | login    | <login>    |
@@ -44,8 +45,8 @@ Funcionalidade: Login
 
     Exemplos:
       | identificacao    | login    | password | remember |
-      | usuario invalido | invalido | senha    | false    |
-      | senha invalida   | chronos  | invalida | false    |
+      | usuario invalido | invalido | Senha123 | false    |
+      | senha invalida   | jolviali | invalida | false    |
 
   @dadosEmBranco
   Esquema do Cenario: Login com <identificacao>
@@ -56,6 +57,6 @@ Funcionalidade: Login
     Entao o botao Sign in deve permanecer desabilitado
 
     Exemplos:
-      | identificacao     | login   | password | remember |
-      | usuario em branco |         | senha    | false    |
-      | senha em branco   | chronos |          | false    |
+      | identificacao     | login    | password | remember |
+      | usuario em branco |          | Senha123 | false    |
+      | senha em branco   | jolviali |          | false    |
