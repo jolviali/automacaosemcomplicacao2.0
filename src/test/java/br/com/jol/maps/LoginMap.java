@@ -21,7 +21,9 @@ public class LoginMap {
     @FindBy(css = "[type='password']")
     public WebElement inpPassword;
     //@FindBy(xpath = "//*[@id=\"sign_in_btnundefined\"]")
-    @FindBy(css = "#sign_in_btnundefined")
+    //*[@id="sign_in_btnundefined"]
+    //@FindBy(css = "#sign_in_btnundefined")
+    @FindBy(xpath = "//sec-form/sec-sender/button")
     public WebElement btnSignIn;
     //@FindBy(xpath = "//login-modal/div/div/div[3]/sec-form/div/input")
     @FindBy(css = "*[name='remember_me']")
@@ -31,4 +33,8 @@ public class LoginMap {
     public WebElement linkCreateAccount;
     @FindBy(css = ".loader")
     public WebElement divLoader;
+    @FindBy(css = ".containMiniTitle")
+    public WebElement txtLogado;
+    @FindBy(xpath = "//label[contains(text(), 'Incorrect')]")
+    public WebElement txtErroLogin;
 }
