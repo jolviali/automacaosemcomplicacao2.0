@@ -6,24 +6,31 @@ import br.com.jol.pages.LoginPage;
 import br.com.jol.pages.NewAccountPage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
 import org.junit.Assert;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class LoginSteps {
     LoginPage loginPage;
     String username;
     @Before
-    public void iniciaNavegador(){
+    public void iniciaNavegador(Scenario cenario){
         new Driver(Browser.CHROME);
+        Driver.setNomeCenario(cenario.getName());
+        Driver.criaDiretorio();
     }
 
     @After
-    public void fechaNavegador(){
+    public void fechaNavegador(Scenario cenario) throws IOException {
+        if (cenario.isFailed()){
+            Driver.printScreen("erro no cenário");
+        }
         Driver.getDriver().quit();
     }
 
@@ -66,7 +73,7 @@ public class LoginSteps {
     }
 
     @Quando("os campos de login sejam preenchidos da seguinte forma:")
-    public void osCamposDeLoginSejamPreenchidosDaSeguinteForma(Map<String, String> map) {
+    public void osCamposDeLoginSejamPreenchidosDaSeguinteForma(Map<String, String> map) throws IOException {
         username = map.get("login");
         String password = map.get("password");
         boolean remember = Boolean.parseBoolean(map.get("remember"));
@@ -75,6 +82,7 @@ public class LoginSteps {
         loginPage.setInpPassword(password);
         loginPage.aguardaLoader();
         if(remember) loginPage.clickRemember();
+        Driver.printScreen("preenchimento dos campos de login");
     }
 
     @E("seja clicado o botao Sign in")
@@ -84,8 +92,9 @@ public class LoginSteps {
     }
 
     @Entao("deve ser possivel logar no sistema")
-    public void deveSerPossivelLogarNoSistema() {
+    public void deveSerPossivelLogarNoSistema() throws IOException {
         Assert.assertEquals(username, loginPage.getUsuarioLogado());
+        Driver.printScreen("logado no sistema");
     }
 
     @Entao("o sistema deve exibir uma mensagem de erro")
