@@ -108,4 +108,12 @@ public class LoginSteps {
         //Assert.assertEquals(false, enabled);
         Assert.assertFalse(enabled);
     }
+
+    @Dado("que esteja logado no sistema com:")
+    public void queEstejaLogadoNoSistemaCom(Map<String, String> map) throws IOException {
+        queAModalEstejaSendoExibida();
+        osCamposDeLoginSejamPreenchidosDaSeguinteForma(map);
+        sejaClicadoOBotaoSignIn();
+        deveSerPossivelLogarNoSistema();
+    }
 }
