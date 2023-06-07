@@ -10,6 +10,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
@@ -46,9 +47,6 @@ public class Driver {
             case EDGE:
                 startEdge();
                 break;
-            default:
-                startChrome();
-                break;
         }
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
@@ -74,7 +72,10 @@ public class Driver {
         ChromeOptions chromeOptions = new ChromeOptions();
 
         boolean headless = Boolean.parseBoolean(System.getProperty("headless"));
-        chromeOptions.setHeadless(headless);
+        if (headless) {
+            chromeOptions.addArguments("--headless=new");
+        }
+        //chromeOptions.setHeadless(headless);
 
         driver = new ChromeDriver(chromeOptions);
         driver.manage().window().setSize(new Dimension(1920,1080));
@@ -84,9 +85,11 @@ public class Driver {
         return driver;
     }
     public static void visibilityOf(WebElement element){
+
         wait.until(ExpectedConditions.visibilityOf(element));
     }
     public static void invisibilityOf(WebElement element){
+
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
     public static void attributeChange(WebElement element, String attribute, String value){
@@ -106,6 +109,16 @@ public class Driver {
         String caminho = diretorio.getPath() + "/" + numPrint + "_" + passo + ".png";
         FileUtils.copyFile(file, new File(caminho));
     }
+    public static void aguardaOptions(Select select){
+        for (int i=0; i<6; i++){
+            if (select.getOptions().size() > 1){
+                return;
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
 
-
+            }
+        }
+    }
 }
